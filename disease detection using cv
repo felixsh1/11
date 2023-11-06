@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+
+# 读取图像
+image = cv2.imread('image.jpg')
+
+# 定义RGB颜色范围
+lower_range = np.array([0, 0, 200])  # 红色较强的颜色
+upper_range = np.array([100, 100, 255])  # 包含一些其他颜色的红色
+
+# 找到特定范围内的颜色
+mask = cv2.inRange(image, lower_range, upper_range)
+
+# 对图像进行二值化处理，使得在颜色范围内的部分为白色，不在范围内的为黑色
+result = cv2.bitwise_and(image, image, mask=mask)
+
+# 显示原图像和处理后的图像
+cv2.imshow('image', image)
+cv2.imshow('result', result)
+
+# 等待按键，然后关闭所有窗口
+cv2.waitKey(0)
+cv2.destroyAllWindows()
