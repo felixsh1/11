@@ -109,6 +109,29 @@ cv2.destroyAllWindows()
 
 
 
+## HSV
+
+HSV + SVM
+https://www.ingentaconnect.com/content/tcsae/tcsae/2016/00000032/00000019/art00025?crawler=true
+http://www.gpxygpfx.com/article/2023/1000-0593-43-8-2596.html
+
+
+
+
+## HSI
+
+HSI color moment feature + SVM
+CCM feature + SVM
+CCLBP feature + SVM 
+Majority voting method
+Fixed weighted voting method
+The first and second moment of R、G、B and with improving LBP model of texture feature + SVM 
+Color moment and gray co-occurrence matrix + SVM
+Color histogram and the co-occurrence matrix of H、S、V + SVM
+
+
+
+
 ## decision tree
 from sklearn import tree
 import numpy as np
