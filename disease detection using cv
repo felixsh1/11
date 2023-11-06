@@ -1,12 +1,35 @@
 import cv2
+import matplotlib.pyplot as plt
+
+# 读取图像
+img = cv2.imread('image.jpg')
+
+# 将图像从BGR转换为RGB
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+# 创建RGB直方图
+plt.hist(img_rgb.ravel(), bins=256, color='red', alpha=0.5)
+plt.xlabel('Intensity Value')
+plt.ylabel('Count')
+plt.title('Histogram of RGB Values in Image')
+plt.show()
+
+
+
+import cv2
 import numpy as np
 
 # 读取图像
 image = cv2.imread('image.jpg')
 
-# 定义RGB颜色范围
-lower_range = np.array([0, 0, 200])  # 红色较强的颜色
-upper_range = np.array([100, 100, 255])  # 包含一些其他颜色的红色
+# 定义RGB颜色范围-Disease area
+lower_range = np.array([209, 178, 231])  
+upper_range = np.array([230, 203, 255])  
+
+# 定义RGB颜色范围-Normal area
+lower_range = np.array([119, 24, 112])  
+upper_range = np.array([159, 123, 165])  
+
 
 # 找到特定范围内的颜色
 mask = cv2.inRange(image, lower_range, upper_range)
@@ -21,3 +44,7 @@ cv2.imshow('result', result)
 # 等待按键，然后关闭所有窗口
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+
+
