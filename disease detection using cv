@@ -1,5 +1,8 @@
 import cv2
 import matplotlib.pyplot as plt
+import cv2
+import numpy as np
+import random
 
 # 读取图像
 img = cv2.imread('image.jpg')
@@ -14,7 +17,63 @@ plt.ylabel('Count')
 plt.title('Histogram of RGB Values in Image')
 plt.show()
 
+plt.hist(img_rgb.ravel(), bins=256, color='green', alpha=0.5)
+plt.xlabel('Intensity Value')
+plt.ylabel('Count')
+plt.title('Histogram of RGB Values in Image')
+plt.show()
 
+plt.hist(img_rgb.ravel(), bins=256, color='blue', alpha=0.5)
+plt.xlabel('Intensity Value')
+plt.ylabel('Count')
+plt.title('Histogram of RGB Values in Image')
+plt.show()
+
+
+
+
+# 向图片中添加椒盐噪声
+def salt_pepper_noise(image, prob):
+    output = np.zeros(image.shape, np.uint8)
+    thres = 1 - prob
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            randomnum = random.random()
+            if randomnum < prob:
+                output[i][j] = 0
+            elif randomnum > thres:
+                output[i][j] = 255
+            else:
+                output[i][j] = image[i][j]
+    return output
+
+# 使用中值滤波器去除噪声
+def median_filter(image, kernel_size):
+    return cv2.medianBlur(image, kernel_size)
+
+# 读取图像
+img = cv2.imread('image.jpg', cv2.IMREAD_GRAYSCALE)
+
+# 添加噪声
+noisy_img = salt_pepper_noise(img, 0.05)
+
+# 去除噪声
+denoised_img = median_filter(noisy_img, 3)
+
+
+from PIL import Image, ImageEnhance
+
+# 读取图像
+img = Image.open('image.jpg')
+
+# 创建一个对比度增强对象
+enhancer = ImageEnhance.Contrast(img)
+
+# 调整对比度
+enhanced_img = enhancer.enhance(1.5)
+
+# 保存增强后的图像
+enhanced_img.save('enhanced_image.jpg')
 
 import cv2
 import numpy as np
@@ -27,8 +86,8 @@ lower_range = np.array([209, 178, 231])
 upper_range = np.array([230, 203, 255])  
 
 # 定义RGB颜色范围-Normal area
-lower_range = np.array([119, 24, 112])  
-upper_range = np.array([159, 123, 165])  
+# lower_range = np.array([119, 24, 112])  
+# upper_range = np.array([159, 123, 165])  
 
 
 # 找到特定范围内的颜色
@@ -44,6 +103,80 @@ cv2.imshow('result', result)
 # 等待按键，然后关闭所有窗口
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+
+
+
+
+## decision tree
+from sklearn import tree
+import numpy as np
+import cv2
+
+# 读取图像
+img = cv2.imread('image.jpg')
+
+# 将图像转换为二维数组
+pixels = np.reshape(img, (-1, 3))
+
+# 假设你已经有了一个标签数组
+labels = label.txt
+
+# 创建并训练决策树
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(pixels, labels)
+
+# 读取新的图像
+new_img = cv2.imread('new_image.jpg')
+
+# 将新图像转换为二维数组
+new_pixels = np.reshape(new_img, (-1, 3))
+
+# 使用决策树模型进行预测
+predictions = clf.predict(new_pixels)
+
+# 将预测结果重新塑形为原始图像的形状
+segmented_img = np.reshape(predictions, new_img.shape[:2])
+
+
+
+
+## random forest
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+import cv2
+
+# 读取图像
+img = cv2.imread('image.jpg')
+
+# 将图像转换为二维数组
+pixels = np.reshape(img, (-1, 3))
+
+# 假设你已经有了一个标签数组
+labels = ...
+
+# 创建并训练随机森林
+clf = RandomForestClassifier(n_estimators=100)
+clf = clf.fit(pixels, labels)
+
+# 读取新的图像
+new_img = cv2.imread('new_image.jpg')
+
+# 将新图像转换为二维数组
+new_pixels = np.reshape(new_img, (-1, 3))
+
+# 使用随机森林模型进行预测
+predictions = clf.predict(new_pixels)
+
+# 将预测结果重新塑形为原始图像的形状
+segmented_img = np.reshape(predictions, new_img.shape[:2])
+
+
+
+
+
+
 
 
 
